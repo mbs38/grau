@@ -52,5 +52,5 @@ and so on.
 So switchting off all lights becomes very easy:
 
 ```
-grau off light
+grau off light*
 ```
