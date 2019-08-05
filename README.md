@@ -32,12 +32,14 @@ grau list light\*
 
 This little wildcard feature can be very useful, if you chose your aliases wisely.
 In our hackerspace all lights are named according to the cardinal direction and the name of the room they are in:
-´lightLabSouth
+```
+lightLabSouth
 lightLabNorth
 lightStudioSouth
 lightStudioNorth
 lightKitchenSouth
-lightKitchenNorth´
+lightKitchenNorth
+```
 
 and so on.
 
