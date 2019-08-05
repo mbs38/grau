@@ -185,12 +185,8 @@ elif args.command=='getval':
             for thing in thinglist:
                 if thing.value is not None:
                     print(thing.name+" = "+str(thing.value))
-
-        
         else:
             print("\""+str(args.objectname)+"\" not found")
-    
-
 
 if connected:
     mqc.loop_stop()
