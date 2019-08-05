@@ -50,17 +50,19 @@ class thing():
         self.outtopic=outtopic
         self.onpayload=onpayload
         self.offpayload=offpayload
+        self.value=None
         
 parser = argparse.ArgumentParser(description='Home control from the terminal')
-parser.add_argument('command',type=str, choices=['on','off','setval','list'], help='Command.')
+parser.add_argument('command',type=str, choices=['on','off','setval','list','getval'], help='Command.')
 parser.add_argument('objectname',nargs='?',type=str, help='Object name like \"lightOutdoors\", case insensitive')
 parser.add_argument('value',nargs='?',type=str, help='value to be set using the command setval')
 
 args=parser.parse_args()
 
 def messagehandler(mqc,userdata,msg):
-    (function,reference) = msg.topic.split("/")
-    payload = str(msg.payload.decode("utf-8"))
+    for thing in thinglist:
+        if msg.topic == thing.intopic:
+            thing.value = str(msg.payload.decode("utf-8"))
 
 def readConf():
     global csvfile
@@ -117,6 +119,9 @@ def findByName(searchterm):
                 outlist.append(thing)
     return outlist
 
+def subscribe(thing):
+    mqc.subscribe(thing.intopic)
+
 
 
 readConf()
@@ -159,6 +164,33 @@ elif args.command=='on' or args.command=='off' or args.command=='setval':
 
     else:
         print("\""+str(args.objectname)+"\" not found")
+
+elif args.command=='getval':
+    connect_mqtt()
+    while not connected:
+        pass
+    if not args.objectname:
+        for thing in thinglist:
+            subscribe(thing)
+        time.sleep(1)
+        for thing in thinglist:
+            if thing.value is not None:
+                print(thing.name+" = "+str(thing.value))
+    else:
+        results = findByName(args.objectname)
+        if len(results)>0:
+            for thing in results:
+                subscribe(thing)
+            time.sleep(1)
+            for thing in thinglist:
+                if thing.value is not None:
+                    print(thing.name+" = "+str(thing.value))
+
+        
+        else:
+            print("\""+str(args.objectname)+"\" not found")
+    
+
 
 if connected:
     mqc.loop_stop()
