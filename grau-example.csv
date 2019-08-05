@@ -1,7 +1,4 @@
 "alias","outtopic","intopic","onpayload","offpayload"
-# example file.
-#
-# 
 lightLivingRoom,hue/1/set/light,hue/1/state/light,True,False
 lightOutdoors,hue/2/set/light,hue/2/state/light,True,False
 fanLivingRoom,modbus/somedevice/set/output0,modbus/somedevice/state/output0,1,0

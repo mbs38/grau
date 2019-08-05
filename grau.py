@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # grau, the geek reality assistance unit
 # 
 # Copyright (C) [2019]  [Max Brueggemann mail@maxbrueggemann.de]
@@ -85,7 +86,7 @@ def connect_mqtt():
     
     global mqc
     #Setup MQTT Broker
-    clientid=grau + "-" + str(time.time())
+    clientid="grau" + "-" + str(time.time())
     mqc=mqtt.Client(client_id=clientid)
     mqc.on_connect=connecthandler
     mqc.on_message=messagehandler
