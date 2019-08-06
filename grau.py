@@ -94,7 +94,8 @@ def connect_mqtt():
     mqc.on_message=messagehandler
     mqc.initial_connection_attempted = False
     mqc.initial_connection_made = False
-    mqc.username_pw_set(mqtt_user, mqtt_pass)
+    if len(mqtt_user)>0 and len(mqtt_pass)>0:
+        mqc.username_pw_set(mqtt_user, mqtt_pass)
     try:
         mqc.connect(mqtt_host, mqtt_port, 60)
         mqc.initial_connection_attempted = True 
